@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BHARAT PLAY | Indian Cinema Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --main-gold: #fbbf24;
+            --desi-red: #dc2626;
+        }
+
+        body {
+            background-color: #050505;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .movie-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex: 0 0 auto;
+            width: 220px;
+            cursor: pointer;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+        }
+
+        .lang-btn {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-btn:hover {
+            background: var(--main-gold);
+            color: black;
+            transform: translateY(-5px);
+            border-color: var(--main-gold);
+        }
+
+        .lang-active {
+            background: var(--main-gold);
+            color: black;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        /* Custom Scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="fixed w-full z-[1000] glass px-6 md:px-12 py-4 flex justify-between items-center">
+        <div class="text-3xl font-black tracking-tighter text-yellow-500">BHARAT<span class="text-white">PLAY</span>
+        </div>
+        <div class="hidden lg:flex space-x-8 text-sm font-bold uppercase tracking-widest text-gray-400">
+            <a href="#home" class="hover:text-yellow-500 transition">Home</a>
+            <a href="#languages" class="hover:text-yellow-500 transition">Languages</a>
+            <a href="#trending" class="hover:text-yellow-500 transition">Trending</a>
+            <a href="#livetv" class="hover:text-yellow-500 transition">Live Sports</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <i class="fas fa-search cursor-pointer hover:text-yellow-500"></i>
+            <button
+                class="bg-yellow-500 text-black px-5 py-2 rounded-full font-bold text-xs hover:scale-105 transition">SUBSCRIBE</button>
+        </div>
+    </nav>
+
+    <header id="home" class="relative h-screen flex items-center px-6 md:px-12">
+        <div class="absolute inset-0 -z-10">
+            <img id="heroImg"
+                src="https://images.unsplash.com/photo-1590179068383-b9c69aacebd3?auto=format&fit=crop&w=1920&q=80"
+                class="w-full h-full object-cover opacity-50">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-transparent"></div>
+        </div>
+
+        <div class="max-w-3xl pt-20">
+            <span class="bg-red-600 px-3 py-1 text-xs font-bold rounded mb-4 inline-block">BLOCKBUSTER OF THE
+                WEEK</span>
+            <h1 id="heroTitle" class="text-6xl md:text-8xl font-black mb-4 leading-tight">THE HEART <br> <span
+                    class="text-yellow-500">OF INDIA</span></h1>
+            <p class="text-gray-300 text-lg mb-8">From the streets of Mumbai to the temples of Madurai. Experience
+                India's greatest stories in 4K Ultra HD.</p>
+            <div class="flex space-x-4">
+                <button
+                    class="bg-white text-black px-8 py-3 rounded-lg font-bold flex items-center hover:bg-yellow-500 transition">
+                    <i class="fas fa-play mr-2"></i> Play Now
+                </button>
+                <button class="bg-white/10 backdrop-blur-md px-8 py-3 rounded-lg font-bold border border-white/20">Watch
+                    Trailer</button>
+            </div>
+        </div>
+    </header>
+
+    <section id="languages" class="py-12 px-6 md:px-12 reveal">
+        <h2 class="text-2xl font-bold mb-8 flex items-center">
+            <span class="w-2 h-8 bg-yellow-500 mr-3"></span> Choose Your Language
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <button onclick="filterLang('Hindi', this)"
+                class="lang-btn py-6 rounded-2xl bg-white/5 flex flex-col items-center">
+                <span class="text-2xl font-bold">हिन्दी</span>
+                <span class="text-[10px] text-gray-500 uppercase">Hindi</span>
+            </button>
+            <button onclick="filterLang('Kannada', this)"
+                class="lang-btn py-6 rounded-2xl bg-white/5 flex flex-col items-center">
+                <span class="text-2xl font-bold">ಕನ್ನಡ</span>
+                <span class="text-[10px] text-gray-500 uppercase">Kannada</span>
+            </button>
+            <button onclick="filterLang('Tamil', this)"
+                class="lang-btn py-6 rounded-2xl bg-white/5 flex flex-col items-center">
+                <span class="text-2xl font-bold">தமிழ்</span>
+                <span class="text-[10px] text-gray-500 uppercase">Tamil</span>
+            </button>
+            <button onclick="filterLang('Telugu', this)"
+                class="lang-btn py-6 rounded-2xl bg-white/5 flex flex-col items-center">
+                <span class="text-2xl font-bold">తెలుగు</span>
+                <span class="text-[10px] text-gray-500 uppercase">Telugu</span>
+            </button>
+            <button onclick="filterLang('Malayalam', this)"
+                class="lang-btn py-6 rounded-2xl bg-white/5 flex flex-col items-center">
+                <span class="text-2xl font-bold">മലയാളം</span>
+                <span class="text-[10px] text-gray-500 uppercase">Malayalam</span>
+            </button>
+            <button onclick="filterLang('English', this)"
+                class="lang-btn py-6 rounded-2xl bg-white/5 flex flex-col items-center">
+                <span class="text-2xl font-bold">English</span>
+                <span class="text-[10px] text-gray-500 uppercase">Global</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="trending" class="py-12 px-6 md:px-12 reveal">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold">Trending in <span id="currentLang" class="text-yellow-500">India</span></h2>
+            <div class="flex space-x-2">
+                <button class="w-10 h-10 rounded-full bg-white/10 hover:bg-yellow-500 transition"><i
+                        class="fas fa-chevron-left"></i></button>
+                <button class="w-10 h-10 rounded-full bg-white/10 hover:bg-yellow-500 transition"><i
+                        class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <section id="kannada" class="py-12 px-6 md:px-12 reveal">
+            <h2 class="section-title text-2xl font-bold mb-8">Sandalwood Hits (ಕನ್ನಡ)</h2>
+            <div class="movie-row flex space-x-6 overflow-x-auto no-scrollbar pb-10">
+                <div class="movie-card group">
+                    <div class="relative rounded-xl overflow-hidden h-80 shadow-lg border border-white/5">
+                        <img src="khNVygolU0TxLIDWff5tQlAhZ23.webp" class="w-full h-full object-cover">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 p-4 flex flex-col justify-end">
+                            <span class="text-yellow-500 font-bold text-xs">99% Match</span>
+                            <p class="text-[10px] text-gray-300 mt-1">Cast: Yash, Sanjay Dutt</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">K.G.F: Chapter 2</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 9.6</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="7b27f5153993301.633a675e2cd9a.jpg" class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Kantara</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 9.2</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="777-Charlie-2022-Action-Adventure-Kannada-Movie-Review.jpg"
+                            class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">777 Charlie</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.9</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5 shadow-inner">
+                        <img src="da4239118502057.608a5261792cd.png" class="w-full h-full object-cover">
+                    </div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Vikrant Rona</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.2</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hindi" class="py-12 px-6 md:px-12 reveal">
+            <h2 class="section-title text-2xl font-bold mb-8">Bollywood Blockbusters (हिन्दी)</h2>
+            <div class="movie-row flex space-x-6 overflow-x-auto no-scrollbar pb-10">
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="1_dsqi7bCkNltTnZ0Oe_0fxg.jpg" class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Jawan</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.4</span>
+                    </div>
+                </div>
+
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="image_search_1701150531881.jpg" class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Animal</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.1</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="fighter-2024-movie-poster.avif" class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Fighter</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.0</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5">
+                        <img src="brahmastra-part-one-shiva-2022-06.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Brahmastra</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 7.9</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="telugu" class="py-12 px-6 md:px-12 reveal">
+            <h2 class="section-title text-2xl font-bold mb-8">Tollywood Power (తెలుగు)</h2>
+            <div class="movie-row flex space-x-6 overflow-x-auto no-scrollbar pb-10">
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img src="RRR-jpeg.webp"
+                            class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">RRR</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 9.0</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5">
+                        <img src="Sita-Ramam-poster.png" class="w-full h-full object-cover">
+                    </div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Sita Ramam</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.6</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="MV5BNDM3N2UzM2UtMjEwMC00NGUzLThmMmQtNGMyM2VmMDA0ZWEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
+                            class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Pushpa: The Rule</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 9.4</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img src="186570.jpg"
+                            class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Baahubali 2</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 9.3</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tamil" class="py-12 px-6 md:px-12 reveal">
+            <h2 class="section-title text-2xl font-bold mb-8">Kollywood Legends (தமிழ்)</h2>
+            <div class="movie-row flex space-x-6 overflow-x-auto no-scrollbar pb-10">
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="74b6e1142812473.626e3d1f501a7.jpeg" class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Vikram</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 9.1</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5">
+                        <img src="wp10188220.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Jai Bhim</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 9.3</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img src="143764_2_large.jpg"
+                            class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Leo</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.7</span>
+                    </div>
+                </div>
+                <div class="movie-card group">
+                    <div class="rounded-xl overflow-hidden h-80 border border-white/5"><img
+                            src="07e43b32d5aeb613a5f635de1ae5f8d4.jpg" class="w-full h-full object-cover"></div>
+                    <div class="mt-3 flex justify-between items-center px-1">
+                        <p class="font-bold text-sm">Ponniyin Selvan</p>
+                        <span class="text-xs text-yellow-500 font-bold">★ 8.8</span>
+                    </div>
+                </div>
+            </div>
+            <section id="malayalam" class="py-12 px-6 md:px-12 reveal">
+                <h2 class="section-title text-2xl font-bold mb-8">Mollywood Masterpieces (മലയാളം)</h2>
+                <div class="movie-row flex space-x-6 overflow-x-auto no-scrollbar pb-10">
+
+                    <div class="movie-card group">
+                        <div class="relative rounded-xl overflow-hidden h-80 border border-white/5">
+                            <img src="poster.jpg" class="w-full h-full object-cover">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 p-4 flex flex-col justify-end">
+                                <span class="text-yellow-500 font-bold text-xs">96% Match</span>
+
+                            </div>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center px-1">
+                            <p class="font-bold text-sm">Sarvam Maya</p>
+                            <span class="text-xs text-yellow-500 font-bold">★ 8.8</span>
+                        </div>
+                    </div>
+
+                    <div class="movie-card group">
+                        <div class="rounded-xl overflow-hidden h-80 border border-white/5 shadow-lg">
+                            <img src="fd28b92d89294f8f8ce32726bde430b5.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <div class="mt-3 flex justify-between items-center px-1">
+                            <p class="font-bold text-sm">Minnal Murali</p>
+                            <span class="text-xs text-yellow-500 font-bold">★ 8.2</span>
+                        </div>
+                    </div>
+
+                    <div class="movie-card group">
+                        <div class="rounded-xl overflow-hidden h-80 border border-white/5">
+                            <img src="wp6843735.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <div class="mt-3 flex justify-between items-center px-1">
+                            <p class="font-bold text-sm">Lucifer</p>
+                            <span class="text-xs text-yellow-500 font-bold">★ 8.5</span>
+                        </div>
+                    </div>
+
+                    <div class="movie-card group">
+                        <div class="rounded-xl overflow-hidden h-80 border border-white/5">
+                            <img src="P_HO00012703_1763392183142.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <div class="mt-3 flex justify-between items-center px-1">
+                            <p class="font-bold text-sm">eko</p>
+                            <span class="text-xs text-yellow-500 font-bold">★ 8.9</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </section>
+
+        <section id="livetv" class="py-12 px-6 md:px-12 reveal bg-yellow-500/5">
+            <h2 class="text-3xl font-bold mb-8">Live Cricket & Sports</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800"
+                        class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="bg-red-600 px-4 py-1 rounded-full text-xs font-black mb-2 animate-pulse">LIVE
+                                NOW
+                            </div>
+                            <h3 class="text-3xl font-black">IND vs AUS</h3>
+                            <p class="text-yellow-500 font-bold">Border-Gavaskar Trophy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
+                    <img src="PKL-2025-Season-12-Dates-Time-Full-Schedule-Teams-Live-Streaming-Channel.jpg"
+                        class="w-full h-full object-cover opacity-60">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="bg-red-600 px-4 py-1 rounded-full text-xs font-black mb-2 animate-pulse">LIVE
+                                NOW</div>
+                            <h3 class="text-3xl font-black">PKL Season 12</h3>
+                            <p class="text-yellow-500 font-bold">Pro Kabaddi League</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer class="py-16 px-6 md:px-12 glass border-t border-yellow-500/20">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+
+                <div class="col-span-1 md:col-span-1">
+                    <div class="text-3xl font-black text-yellow-500 mb-4 tracking-tighter">BHARAT<span
+                            class="text-white">PLAY</span></div>
+                    <p class="text-gray-400 italic text-sm leading-relaxed">
+                        "From the first whistle to the final credit—experience the magic of Bharat."
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 col-span-1 md:col-span-2 gap-8">
+                    <div>
+                        <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">About</h4>
+                        <ul class="text-gray-500 text-sm space-y-2">
+                            <li><a href="#" class="hover:text-yellow-500 transition">Our Story</a></li>
+                            <li><a href="#" class="hover:text-yellow-500 transition">Press Kit</a></li>
+                            <li><a href="#" class="hover:text-yellow-500 transition">Careers</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Legal</h4>
+                        <ul class="text-gray-500 text-sm space-y-2">
+                            <li><a href="#" class="hover:text-yellow-500 transition">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-yellow-500 transition">Cookie Policy</a></li>
+                            <li><a href="#" class="hover:text-yellow-500 transition">Terms of Use</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Support</h4>
+                        <ul class="text-gray-500 text-sm space-y-2">
+                            <li><a href="#" class="hover:text-yellow-500 transition">FAQ</a></li>
+                            <li><a href="#" class="hover:text-yellow-500 transition">Account Info</a></li>
+                            <li><a href="#" class="hover:text-yellow-500 transition">Subscription</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-span-1">
+                    <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Connect With Us</h4>
+                    <div class="space-y-4">
+                        <a href="mailto:support@bharatplay.com" class="flex items-center space-x-3 group">
+                            <div
+                                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-yellow-500 transition">
+                                <i class="fas fa-envelope text-gray-400 group-hover:text-black"></i>
+                            </div>
+                            <span
+                                class="text-sm text-gray-400 group-hover:text-white transition">support@bharatplay.com</span>
+                        </a>
+                        <a href="tel:+919876543210" class="flex items-center space-x-3 group">
+                            <div
+                                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-yellow-500 transition">
+                                <i class="fas fa-phone-alt text-gray-400 group-hover:text-black"></i>
+                            </div>
+                            <span class="text-sm text-gray-400 group-hover:text-white transition">+91 98765 43210</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 pt-8 border-t border-white/5 text-center">
+                <p class="text-[10px] text-gray-600 uppercase tracking-widest font-medium">
+                    Streaming the soul of India, one blockbuster at a time &copy; 2026 BHARAT PLAY MEDIA
+                </p>
+            </div>
+        </footer>
+        </div>
+
+        <script>
+            // Language Filter Logic
+            function filterLang(lang, btn) {
+                // Update Active State
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('lang-active'));
+                btn.classList.add('lang-active');
+
+                // Update Text
+                document.getElementById('currentLang').innerText = lang;
+                document.getElementById('heroTitle').innerHTML = `${lang} <br> <span class="text-yellow-500">HIT MOVIES</span>`;
+
+                // Scroll to Trending
+                document.getElementById('trending').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Scroll Reveal
+            window.addEventListener('scroll', () => {
+                const reveals = document.querySelectorAll('.reveal');
+                reveals.forEach(el => {
+                    const windowHeight = window.innerHeight;
+                    const elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 100) {
+                        el.classList.add('active');
+                    }
+                });
+            });
+
+            // Initialize first section
+            window.onload = () => document.querySelectorAll('.reveal')[0].classList.add('active');
+        </script>
+</body>
+
+</html>
+<div class="relative group">
+    <div
+        class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-md flex items-center space-x-1 z-20">
+        <i class="fas fa-bullhorn text-yellow-500 text-xs"></i>
+        <span class="text-[10px] font-bold text-white">4.2K Whistles</span>
+    </div>
+</div>
+<div class="glass p-6 rounded-3xl mt-8">
+    <h3 class="text-sm font-bold mb-4 text-yellow-500 uppercase tracking-widest">Tune Your Masala</h3>
+    <div class="flex items-center space-x-4">
+        <span class="text-xs text-gray-400">Pure Romance</span>
+        <input type="range" class="flex-1 h-1 bg-gray-700 accent-yellow-500 appearance-none rounded-lg cursor-pointer">
+        <span class="text-xs text-gray-400">Hard Action</span>
+    </div>
+</div>

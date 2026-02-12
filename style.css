@@ -1,0 +1,167 @@
+/* --- BHARAT PLAY PREMIUM STYLES --- */
+
+:root {
+    --gold: #fbbf24;
+    --gold-glow: rgba(251, 191, 36, 0.4);
+    --desi-red: #dc2626;
+    --deep-bg: #050505;
+}
+
+/* 1. Typography & Smoothness */
+body {
+    background-color: var(--deep-bg);
+    color: #fff;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 2. Advanced Navigation Glassmorphism */
+.glass {
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(251, 191, 36, 0.1);
+}
+
+/* 3. The "Masala" Hover Effect for Cards */
+.movie-card {
+    position: relative;
+    border-radius: 12px;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.movie-card:hover {
+    transform: scale(1.1) translateY(-10px);
+    z-index: 50;
+    box-shadow: 0 15px 45px -10px var(--gold-glow);
+}
+
+.movie-card img {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 4. Interactive Language Buttons */
+.lang-btn {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    transition: all 0.4s ease;
+}
+
+.lang-btn:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px var(--gold-glow);
+    transform: translateY(-5px);
+}
+
+.lang-active {
+    background: var(--gold) !important;
+    color: #000 !important;
+    border-color: var(--gold);
+    box-shadow: 0 0 25px var(--gold-glow);
+}
+
+/* 5. Scroll Reveal & Staggering */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 6. Custom Gold Scrollbar for Movie Rows */
+.no-scrollbar::-webkit-scrollbar {
+    height: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 10px;
+}
+
+/* 7. Animated Live Badge */
+@keyframes live-flash {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.live-pulse {
+    animation: live-flash 1.5s infinite ease-in-out;
+    background: var(--desi-red);
+    box-shadow: 0 0 10px var(--desi-red);
+}
+
+/* 8. Section Headers Decoration */
+.section-title {
+    position: relative;
+    padding-left: 20px;
+}
+
+.section-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 4px;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+    border-radius: 20px;
+}
+/* Whistle Animation */
+@keyframes whistle-float {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.whistle-particle {
+    position: absolute;
+    pointer-events: none;
+    color: var(--gold);
+    animation: whistle-float 1s ease-out forwards;
+}
+
+/* Custom Range Slider Styling */
+input[type=range]::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--gold);
+    -webkit-appearance: none;
+    margin-top: -6px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
